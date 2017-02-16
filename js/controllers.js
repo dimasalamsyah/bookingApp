@@ -1,6 +1,6 @@
 var ctrl = angular.module('starter.controllers', []);
 
-ctrl.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
+ctrl.controller('AppCtrl', function($scope, $ionicModal, $timeout, $state, myCache) {
 
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
@@ -39,9 +39,31 @@ ctrl.controller('AppCtrl', function($scope, $ionicModal, $timeout) {
       $scope.closeLogin();
     }, 1000);
   };
+
+  $scope.doLogout = function() {
+    /*localStorage.setItem("token_username", "");
+    localStorage.setItem("token_password", "");
+    localStorage.setItem("token_koneksi", "");*/
+    //$state.href("login");
+
+
+    /*if (cache) { // If there’s something in the cache, use it!
+      $scope.variable = cache;
+      console.log($scope.variable);
+    }
+    else { // Otherwise, let’s generate a new instance
+      myCache.put('myData', 'This is cached data!');
+      $scope.variable = myCache.get('myData');
+      console.log($scope.variable);
+    }*/
+
+
+  }
+
+
 });
 
-ctrl.controller('PlaylistsCtrl', function($scope) {
+ctrl.controller('PlaylistsCtrl', function($scope, myCache, $window) {
   $scope.playlists = [
     { title: 'Reggae', id: 1 },
     { title: 'Chill', id: 2 },
@@ -50,6 +72,13 @@ ctrl.controller('PlaylistsCtrl', function($scope) {
     { title: 'Rap', id: 5 },
     { title: 'Cowbell', id: 6 }
   ];
+
+  $scope.tes_aja = function(){
+    myCache.put('myData', 'This is cached ooo!');
+    var cache = myCache.get('myData');
+    console.log($window.localStorage['koneksi']);
+  }
+
 });
 
 ctrl.controller('PlaylistCtrl', function($scope, $stateParams) {

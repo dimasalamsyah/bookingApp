@@ -1,27 +1,18 @@
 // Ionic Starter App
-var link ="";
+var link_dir ="/ionic/ionic_server/";
 
-var link_getData_Barang ="";
-var link_getData_Kelas ="";
-var link_getData_Jam ="";
-var link_getData_ListPemesanan ="";
+var link = localStorage.getItem("token_koneksi");
 
-var link_setData_Pemesanan ="";
+var link_getData_Barang = link +"/ionic/ionic_server/getData_barang.php";
+var link_getData_Kelas = link +"/ionic/ionic_server/getData_kelas.php";
+var link_getData_Jam = link +"/ionic/ionic_server/getData_jam.php";
+var link_getData_ListPemesanan = link +"/ionic/ionic_server/getData_ListPemesanan1.php";
 
-var link_delData_Pemesanan ="";
+var link_setData_Pemesanan = link +"/ionic/ionic_server/cekData_Pemesanan.php";
 
-/*var link = "192.168.3.56:8080";
+var link_delData_Pemesanan = link +"/ionic/ionic_server/delData_Pemesanan.php";
 
-var link_getData_Barang = "http://"+ link +"/ionic/ionic_server/getData_barang.php";
-var link_getData_Kelas = "http://"+ link +"/ionic/ionic_server/getData_kelas.php";
-var link_getData_Jam = "http://"+ link +"/ionic/ionic_server/getData_jam.php";
-var link_getData_ListPemesanan = "http://"+ link +"/ionic/ionic_server/getData_ListPemesanan1.php";
-
-var link_setData_Pemesanan = "http://"+ link +"/ionic/ionic_server/cekData_Pemesanan.php";
-
-var link_delData_Pemesanan = "http://"+ link +"/ionic/ionic_server/delData_Pemesanan.php";*/
-
-//var link_setData_Pemesanan = "http://"+ link +"/ionic_server/setData_pemesanan.php";
+//var link_setData_Pemesanan = link +"/ionic_server/setData_pemesanan.php";
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
@@ -55,12 +46,18 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', '
     controller: 'AppCtrl'
   })
 
+/*login dan set koneksi*/
+  .state('login', {
+      url: '/login',
+      templateUrl: 'templates/login.html',
+      controller: 'loginCtrl'
+  })
+  
   .state('koneksi', {
       url: '/koneksi',
       templateUrl: 'templates/koneksi.html',
-      controller: 'bookingCtrl'
+      controller: 'koneksiCtrl'
   })
-
 
   .state('app.search', {
     url: '/search',
@@ -105,7 +102,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', '
     views: {
       'menuContent': {
         templateUrl: 'templates/booking.html',
-        controller: 'bookingCtrl'
+        controller: 'bookingCtrl',
+
       }
     }
   })
@@ -161,5 +159,10 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', '
     ionicDatePickerProvider.configDatePicker(datePickerObj);
   })
 /*akhir tgl*/
+
+
+.factory('myCache', function($cacheFactory) {
+ return $cacheFactory('myData');
+});
 
 ;

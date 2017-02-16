@@ -2,7 +2,10 @@ ctrl.controller('bookingCtrl', function($scope, $stateParams, $state, ionicDateP
 
 	$scope.koneksiData = {};
 	var ip="";
-    $scope.create_koneksi = function(){
+
+
+
+   /* $scope.create_koneksi = function(){
     	console.log($scope.koneksiData.ip);
     	ip = $scope.koneksiData.ip;
     	link = "http://"+ ip;
@@ -26,11 +29,11 @@ ctrl.controller('bookingCtrl', function($scope, $stateParams, $state, ionicDateP
 	    });
 
 	    $timeout(function() {
-	    	$scope.resultKoneksi = "Koneksi gagal!";
+	    	//$scope.resultKoneksi = "Koneksi gagal!";
 	        $scope.hide();
 	    }, 10000);
 
-    }
+    }*/
 
 	$scope.kelass = [
 	    { title: '201',   class:'col-50', href:'booking/201', id: 1 },

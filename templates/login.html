@@ -6,21 +6,27 @@
     </div>
   </ion-header-bar>
   <ion-content>
-    <form ng-submit="doLogin()">
+    <form ng-submit="loginApp()" name="myLogin">
       <div class="list">
         <label class="item item-input">
           <span class="input-label">Username</span>
-          <input type="text" ng-model="loginData.username" class="input_material">
+          <input type="text" ng-model="loginData.username" required="required">
         </label>
         <label class="item item-input">
           <span class="input-label">Password</span>
-          <input type="password" ng-model="loginData.password">
+          <input type="password" ng-model="loginData.password" required="required">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">http://</span>
+          <input type="text" ng-model="loginData.koneksi" required="required">
         </label>
         <label class="item">
-          <button class="button button-block button-positive" type="submit">Log in</button>
+          <button class="button button-block button-positive" type="submit" ng-disabled="myLogin.$invalid">Log in</button>
         </label>
       </div>
-      
+      <span ng-show="myLogin.loginData.username.$error.required || myLogin.loginData.password.$error.required || 
+      myLogin.loginData.koneksi.$error.required">Tidak boleh kosong </span>
     </form>
+    <center><p>{{pesan_login}}</p></center>
   </ion-content>
 </ion-modal-view>
