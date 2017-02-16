@@ -1,0 +1,38 @@
+<ion-view view-title="Pilih Tanggal">
+  <ion-content>
+	
+	<center style="margin-top: 10px;"><h2>{{getKelas}}</h2></center>
+
+  	<div class="list list-inset" style="">
+	  	<onezone-datepicker datepicker-object="onezoneDatepicker">
+			<button class="button button-outline button-block button-dark show-onezone-datepicker" style="">
+			  {{onezoneDatepicker.date | date:'dd MMMM yyyy'}}
+			  <i class="icon ion-calendar" style="float:right;"></i>
+			</button>
+		</onezone-datepicker>
+	</div>
+
+	<div class="list list-inset ">
+	  <label class="item item-input item-select">
+	    <div class="input-label">
+	      Jam
+	    </div>
+	    <select ng-model="isiJam" ng-change="selectJam(isiJam)">
+	      <option ng-repeat="jam in jams" value="{{jam.title}}">{{jam.title}}</option>
+	    </select>
+	  </label>
+	</div>
+
+	<div class="list list-inset ">
+		<center>
+			<button class="button button-block button-balanced" ng-if="btn_klik === 'null'" ng-click="check_booking()">
+			  Booking
+			</button>
+			<img ng-if="btn_klik === 'klik_btn'"; src="img/ring.gif"/>
+			<p ng-if="cek_result === 'success'">Yeyy, Berhasil dibooking...</p>
+			<p ng-if="cek_result === 'failed'">Maaf, Kelas sudah di booking!</p>
+		</center>
+	</div>
+
+  </ion-content>
+</ion-view>

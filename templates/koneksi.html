@@ -1,0 +1,17 @@
+<ion-view view-title="Koneksi">
+  <ion-content>
+  	<h2>Koneksi</h2>
+  	<form ng-submit="create_koneksi()">
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">http://</span>
+          <input type="text" ng-model="koneksiData.ip">
+        </label>
+        <label class="item">
+          <button class="button button-block button-balanced" type="submit">Submit</button>
+        </label>
+      </div>
+    </form>
+    <h2>{{resultKoneksi}}</h2>
+  </ion-content>
+</ion-view>

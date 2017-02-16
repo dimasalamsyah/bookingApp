@@ -1,0 +1,13 @@
+<ion-view view-title="Booking">
+  <ion-content>
+
+	<div class="row">
+		
+		<div class="col {{kelas.class}}" ng-repeat="kelas in kelass">
+			<a href="#/app/booking/{{kelas.title}}" class="item textCenter" style="height:100px; background-color:#28dd59; color: white">{{kelas.title}}</a>
+		</div>
+		
+	</div>
+  
+  </ion-content>
+</ion-view>
