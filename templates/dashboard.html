@@ -1,0 +1,19 @@
+<ion-view view-title="Dashboard">
+  <ion-content>
+    <ion-refresher
+        pulling-text="Tarik untuk Refresh..."
+        on-refresh="doRefresh()">
+    </ion-refresher>
+    <div class="card">
+        <div class="item item-divider">
+            Pemesanan 7+ hari dari sekarang
+        </div>
+        <div class="item item-text-wrap">
+            <canvas id="base" class="chart-horizontal-bar"
+			  chart-data="data_kelass" chart-labels="kelass" >
+			</canvas> 
+        </div>
+    </div>
+
+  </ion-content>
+</ion-view>

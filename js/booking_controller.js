@@ -3,6 +3,24 @@ ctrl.controller('bookingCtrl', function($scope, $stateParams, $state, ionicDateP
 	$scope.koneksiData = {};
 	var ip="";
 
+	 /*loading*/
+	$scope.show = function() {
+		$ionicLoading.show({
+		    content: 'Loading',
+		    animation: 'fade-in',
+		    showBackdrop: true,
+		    maxWidth: 200,
+		    showDelay: 0,
+		    //duration: 5000
+		}).then(function(){
+
+	    });
+	 };
+	$scope.hide = function(){
+	    $ionicLoading.hide().then(function(){
+
+	  	});
+	};
 
 
    /* $scope.create_koneksi = function(){
@@ -35,14 +53,14 @@ ctrl.controller('bookingCtrl', function($scope, $stateParams, $state, ionicDateP
 
     }*/
 
-	$scope.kelass = [
+	/*$scope.kelass = [
 	    { title: '201',   class:'col-50', href:'booking/201', id: 1 },
 	    { title: '202',   class:'col-50', href:'booking/202', id: 2 },
 	    { title: '203',   class:'col-50', href:'booking/203', id: 3 },
 	    { title: '205',   class:'col-50', href:'booking/205', ids: 4 },
 	    { title: 'LAB A', class:'col-50', href:'booking/LAB A', id: 5 },
 	    { title: 'LAB B', class:'col-50', href:'booking/LAB B', id: 6 }
-	  ];
+	  ];*/
 
 	$scope.jams = [
 	    { title: '08.00 - 09.00', id: 1 },
@@ -53,19 +71,28 @@ ctrl.controller('bookingCtrl', function($scope, $stateParams, $state, ionicDateP
 	    { title: '14.00 - 15.00', id: 6 }
 	  ];
 
-	  $scope.repeat1 = [
-	  	{tanggal: '2017-01-02'},
-	  	{tanggal: '2017-01-02'},
-	  	{tanggal: '2017-01-02'}
-	  ];
 
+	
+	/*$http({
+	  method: 'GET',
+	  url: link_getData_Kelas
+	}).then(function successCallback(data) {
+		$scope.hide();
+		console.log(data);
+		$scope.kelass = data;
+	}, function errorCallback(response) {
 
+	});*/
+	$scope.show();
+	$http.get(link_getData_Kelas).success(function(data){
+		$scope.hide();
+		$scope.kelass = data;
+	});
 
 	/*get data list pemesanan*/
 	$http.get(link_getData_ListPemesanan).success(function(data){
 		//$scope.lists = $sce.trustAsHtml(data);
 		$scope.lists = data;
-		console.log("ini ip" + ip);
 	});
 
     $scope.doRefresh = function() {
@@ -215,24 +242,7 @@ ctrl.controller('bookingCtrl', function($scope, $stateParams, $state, ionicDateP
 		$window.location.reload(true);
 	};
 
-    /*loading*/
-	$scope.show = function() {
-		$ionicLoading.show({
-		    content: 'Loading',
-		    animation: 'fade-in',
-		    showBackdrop: true,
-		    maxWidth: 200,
-		    showDelay: 0,
-		    //duration: 5000
-		}).then(function(){
-
-	    });
-	 };
-	$scope.hide = function(){
-	    $ionicLoading.hide().then(function(){
-
-	  	});
-	};
+   
 
 
 });
