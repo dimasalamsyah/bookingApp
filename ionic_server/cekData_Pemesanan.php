@@ -35,6 +35,16 @@
 		$count = $stmt->rowCount();
 		$cek = json_encode($count);
 
+		$hari_arr = array("monday" => "Senin", "tuesday" => "Selasa", "wednesday" => "Rabu", 
+						"thursday" => "Kamis", "friday" => "Jumat", "saturday" => "Sabtu", "sunday" => "Minggu");
+
+		$sql_hari = "SELECT to_char(cast('$getTgl' as date), 'day') as hari";
+		$stmt_hari = $db->prepare($sql_hari);
+		$stmt_hari->execute();
+		$rhari = $stmt_hari->fetch(PDO::FETCH_ASSOC);
+		$hari = $hari_arr[trim($rhari['hari'])];
+
+
 		if($cek==0){
 			$sql_no = "SELECT max(id) as id from pemesanan";
 			$stmt_no = $db->prepare($sql_no);
@@ -42,7 +52,7 @@
 			$row = $stmt_no->fetch(PDO::FETCH_ASSOC);
 			$angka = $row['id'] + 1;
 
-			$sql_save = "INSERT into pemesanan values($angka, 'Dimas', 'Dosen', '$getTgl', '$getKelas', '$setJam') ";
+			$sql_save = "INSERT into pemesanan values($angka, 'Dimas', 'Dosen', '$getTgl', '$getKelas', '$setJam', '$hari') ";
 			$stmt_save = $db->prepare($sql_save);
 			$stmt_save->execute();
 			$result = "success";

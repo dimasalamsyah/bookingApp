@@ -22,58 +22,63 @@ ctrl.controller('dashboardCtrl', function($scope, $stateParams, $state, $ionicLo
 
     var count_kelas = [];
 	var kelas = [];
+	var hari = [];
+	var count_hari = [];
 	$scope.show();
 
-    /*get data list pemesanan*/
-	$http.get(link_getData_Kelas).success(function(data){
-		//console.log($scope.kelass2 = data);
-		for(var i in data) {
-			kelas.push(data[i].nama_kelas.trim());
+	$http.get(link_getData_KelasCount).success(function(response,$timeout){
 
-			$http.post(link_getData_KelasCount, {
-				kelas_id : data[i].nama_kelas.trim()
-			})
-			.success(function(response,$timeout){
-				//console.log( "nama kelas:" + data[i].nama_kelas.trim() +" count:"+ response.trim())
-				//console.log(response.count);
-				console.log(response);
-				count_kelas.push(response.count.trim());
-			});
-
-			//console.log(data[i].nama_kelas.trim());
+		for (var a = 0; a < response.length; a++) {			
+			kelas.push(response[a].nama_kelas.trim());
+			count_kelas.push( response[a].count );
 		}
 		$scope.hide();
-		$scope.kelass = kelas;
-		$scope.data_kelass = count_kelas;
-
+	});
+	$http.get(link_getData_HariCount).success(function(response,$timeout){
+		for (var a = 0; a < response.length; a++) {	
+			hari.push( response[a].hari.trim() );
+			count_hari.push( response[a].count );
+		}
+		//console.log(response)
+		$scope.hide();
 	});
 
+	$scope.kelass = kelas;
+	$scope.data_kelass = count_kelas;
+
+	$scope.haris = hari;
+	$scope.data_haris = count_hari;
+	//console.log($scope.haris);
 
 	$scope.doRefresh = function() {
 		count_kelas = [];
 		kelas = [];
+		hari = [];
+		count_hari = [];
 
-    	$http.get(link_getData_Kelas).success(function(data){
-    		//console.log(data);
-    		for(var i in data) {
-				kelas.push(data[i].nama_kelas.trim());
+		$http.get(link_getData_KelasCount).success(function(response,$timeout){
 
-				$http.post(link_getData_KelasCount, {
-					kelas_id : data[i].nama_kelas.trim()
-				})
-				.success(function(response,$timeout){
-					count_kelas.push(response.trim());
-					console.log( "nama kelas:" + data[i].nama_kelas.trim() +" "+ response.trim())
-				});
+			for (var a = 0; a < response.length; a++) {			
+				kelas.push(response[a].nama_kelas.trim());
+				count_kelas.push( response[a].count );
 			}
-			$scope.kelass = kelas;
-			$scope.data_kelass = count_kelas;
+			$scope.$broadcast('scroll.refreshComplete');
+		});
 
-		}).finally(function() {
-			//console.log("data");
-	       // Stop the ion-refresher from spinning
-	       $scope.$broadcast('scroll.refreshComplete');
-	    });
+		$http.get(link_getData_HariCount).success(function(response,$timeout){
+			for (var a = 0; a < response.length; a++) {	
+				hari.push( response[a].hari.trim() );
+				count_hari.push( response[a].count );
+			}
+			$scope.$broadcast('scroll.refreshComplete');
+
+		});
+
+
+		$scope.kelass = kelas;
+		$scope.data_kelass = count_kelas;
+		$scope.haris = hari;
+		$scope.data_haris = count_hari;
     }
 
     

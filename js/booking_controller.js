@@ -23,45 +23,6 @@ ctrl.controller('bookingCtrl', function($scope, $stateParams, $state, ionicDateP
 	};
 
 
-   /* $scope.create_koneksi = function(){
-    	console.log($scope.koneksiData.ip);
-    	ip = $scope.koneksiData.ip;
-    	link = "http://"+ ip;
-
-		link_getData_Barang = "http://"+ link +"/ionic/ionic_server/getData_barang.php";
-		link_getData_Kelas = "http://"+ link +"/ionic/ionic_server/getData_kelas.php";
-		link_getData_Jam = "http://"+ link +"/ionic/ionic_server/getData_jam.php";
-		link_getData_ListPemesanan = "http://"+ link +"/ionic/ionic_server/getData_ListPemesanan1.php";
-
-		link_setData_Pemesanan = "http://"+ link +"/ionic/ionic_server/cekData_Pemesanan.php";
-
-		link_delData_Pemesanan = "http://"+ link +"/ionic/ionic_server/delData_Pemesanan.php";
-
-		$scope.show();
-		$http.get(link).success(function(data){
-
-		}).finally(function() {
-			$scope.hide();	
-	       console.log("finally");
-	       $state.go("app.booking");
-	    });
-
-	    $timeout(function() {
-	    	//$scope.resultKoneksi = "Koneksi gagal!";
-	        $scope.hide();
-	    }, 10000);
-
-    }*/
-
-	/*$scope.kelass = [
-	    { title: '201',   class:'col-50', href:'booking/201', id: 1 },
-	    { title: '202',   class:'col-50', href:'booking/202', id: 2 },
-	    { title: '203',   class:'col-50', href:'booking/203', id: 3 },
-	    { title: '205',   class:'col-50', href:'booking/205', ids: 4 },
-	    { title: 'LAB A', class:'col-50', href:'booking/LAB A', id: 5 },
-	    { title: 'LAB B', class:'col-50', href:'booking/LAB B', id: 6 }
-	  ];*/
-
 	$scope.jams = [
 	    { title: '08.00 - 09.00', id: 1 },
 	    { title: '09.00 - 10.00', id: 2 },
@@ -72,20 +33,9 @@ ctrl.controller('bookingCtrl', function($scope, $stateParams, $state, ionicDateP
 	  ];
 
 
-	
-	/*$http({
-	  method: 'GET',
-	  url: link_getData_Kelas
-	}).then(function successCallback(data) {
-		$scope.hide();
-		console.log(data);
-		$scope.kelass = data;
-	}, function errorCallback(response) {
-
-	});*/
-	$scope.show();
+	//$scope.show();
 	$http.get(link_getData_Kelas).success(function(data){
-		$scope.hide();
+		//$scope.hide();
 		$scope.kelass = data;
 	});
 
@@ -211,13 +161,13 @@ ctrl.controller('bookingCtrl', function($scope, $stateParams, $state, ionicDateP
 			setJam : getJam
 		})
 		.success(function(response,$timeout){
-			$scope.hide();
+			//$scope.hide();
 			if(response.trim() == "success"){
 				$scope.cek_result = "success";
 			}else{
 				$scope.cek_result = "failed";
 			}
-			console.log(response);
+			//console.log(response + getTgl);
 		});
 
 		//console.log($scope.getKelas+" "+ getTgl +" "+ getJam);
@@ -234,7 +184,7 @@ ctrl.controller('bookingCtrl', function($scope, $stateParams, $state, ionicDateP
 			setJam : id_jam.trim()
 		})
 		.success(function(response,$timeout){
-			$scope.hide();		
+			//$scope.hide();		
 		});
 	}
 

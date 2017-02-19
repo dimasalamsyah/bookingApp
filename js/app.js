@@ -1,16 +1,17 @@
 // Ionic Starter App
-var link_dir ="/ionic/ionic_server/";
+var link_dir ="/ionic/bookingApp/www/ionic_server/";
 
-var link = localStorage.getItem("token_koneksi");
+var link = localStorage.getItem("token_koneksi") + link_dir;
 
-var link_getData_Kelas = link +"/ionic/ionic_server/getData_kelas.php";
-var link_getData_Jam = link +"/ionic/ionic_server/getData_jam.php";
-var link_getData_ListPemesanan = link +"/ionic/ionic_server/getData_ListPemesanan1.php";
-var link_getData_KelasCount = link + "/ionic/ionic_server/getData_KelasCount.php";
+var link_getData_Kelas = link + "getData_kelas.php";
+var link_getData_Jam = link + "getData_jam.php";
+var link_getData_ListPemesanan = link + "getData_ListPemesanan1.php";
+var link_getData_KelasCount = link + "getData_KelasCount.php";
+var link_getData_HariCount = link + "getData_HariCount.php";
 
-var link_setData_Pemesanan = link +"/ionic/ionic_server/cekData_Pemesanan.php";
+var link_setData_Pemesanan = link + "cekData_Pemesanan.php";
 
-var link_delData_Pemesanan = link +"/ionic/ionic_server/delData_Pemesanan.php";
+var link_delData_Pemesanan = link + "delData_Pemesanan.php";
 
 //var link_setData_Pemesanan = link +"/ionic_server/setData_pemesanan.php";
 
@@ -18,7 +19,8 @@ var link_delData_Pemesanan = link +"/ionic/ionic_server/delData_Pemesanan.php";
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', 'onezone-datepicker', 'chart.js'])
+angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', 'onezone-datepicker', 'chart.js', 
+                            'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -65,6 +67,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', '
       'menuContent': {
         templateUrl: 'templates/dashboard.html',
         controller: 'dashboardCtrl'
+      }
+    }
+  })
+
+  .state('app.camera', {
+    url: '/camera',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/camera.html',
+        controller: 'cameraCtrl'
       }
     }
   })
