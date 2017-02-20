@@ -1,32 +1,39 @@
-<ion-modal-view>
-  <ion-header-bar>
+<ion-view view-title="Login">
+  <ion-header-bar class="bar bar-header bar-assertive">
     <h1 class="title">Login</h1>
-    <div class="buttons">
-      <button class="button button-clear" ng-click="closeLogin()">Close</button>
-    </div>
   </ion-header-bar>
-  <ion-content>
-    <form ng-submit="loginApp()" name="myLogin">
-      <div class="list">
+  <ion-content class="padding">
+    <div class="list" style="text-align: center;">
+      <img src="img/java.png" class="logo" style="margin-top: 20px; width: 160px;">
+    </div>
+    <div ng-show="error">
+      <span>{{ error.message }}</span>
+    </div>
+    <div class="list card padding">
+      <form name="loginForm">
         <label class="item item-input">
           <span class="input-label">Username</span>
-          <input type="text" ng-model="loginData.username" required="required">
+          <input type="text" ng-model="username" ng-required="required">
         </label>
-        <label class="item item-input">
+        <!-- <label class="item item-input">
           <span class="input-label">Password</span>
-          <input type="password" ng-model="loginData.password" required="required">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">http://</span>
-          <input type="text" ng-model="loginData.koneksi" required="required">
-        </label>
-        <label class="item">
-          <button class="button button-block button-positive" type="submit" ng-disabled="myLogin.$invalid">Log in</button>
-        </label>
-      </div>
-      <span ng-show="myLogin.loginData.username.$error.required || myLogin.loginData.password.$error.required || 
-      myLogin.loginData.koneksi.$error.required">Tidak boleh kosong </span>
-    </form>
-    <center><p>{{pesan_login}}</p></center>
+          <input type="password" ng-model="vm.user.password">
+        </label> -->
+        <button ng-click="login(username)"
+          ng-disabled="!loginForm.$valid"
+          class="button button-block button-assertive activated">
+          Sign In
+        </button>
+      </form>
+    </div>
+    <div class="list" style="text-align:center">
+      <button ng-click="vm.modal.show()" class="button button-small button-outline icon-left ion-person-add button-assertive">
+        Create New Account
+      </button>
+
+      <button ng-click="vm.signInWithFaceBook()" class="button button-small button-outline icon-left ion-person-add button-assertive">
+        Login with facebook
+      </button>
+    </div>
   </ion-content>
-</ion-modal-view>
+</ion-view>

@@ -13,6 +13,9 @@ var link_setData_Pemesanan = link + "cekData_Pemesanan.php";
 
 var link_delData_Pemesanan = link + "delData_Pemesanan.php";
 
+var url_fireChat = "https://bookingapp-f3c5d.firebaseio.com/chat";
+
+
 //var link_setData_Pemesanan = link +"/ionic_server/setData_pemesanan.php";
 
 // angular.module is a global place for creating, registering and retrieving Angular modules
@@ -20,7 +23,7 @@ var link_delData_Pemesanan = link + "delData_Pemesanan.php";
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', 'onezone-datepicker', 'chart.js', 
-                            'ngCordova'])
+                            'ngCordova', 'firebase', 'angularMoment'])//, 'ionic.cloud'
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -35,6 +38,9 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', '
       // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
+
+
+
   });
 })
 
@@ -67,6 +73,36 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', '
       'menuContent': {
         templateUrl: 'templates/dashboard.html',
         controller: 'dashboardCtrl'
+      }
+    }
+  })
+  
+  .state('app.login', {
+    url: '/login',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/login.html',
+        controller: 'chatCtrl'
+      }
+    }
+  })
+
+  .state('app.chat_lists', {
+    url: '/chat',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/chat_lists.html',
+        controller: 'chatCtrl'
+      }
+    }
+  })
+
+  .state('app.chat', {
+    url: '/chat/:ChatId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/chat_detail.html',
+        controller: 'chatCtrl'
       }
     }
   })
@@ -182,21 +218,50 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', '
   })
 /*akhir tgl*/
 
-/*.config(['ChartJsProvider', function (ChartJsProvider) {
-  // Configure all charts
-  ChartJsProvider.setOptions({
-    chartColors: ['#FF5252', '#FF8A80'],
-    responsive: false
-  });
-  // Configure all line charts
-  ChartJsProvider.setOptions('line', {
-    showLines: false
-  });
-}])
 
-*/
+
+.factory('Messages', function($firebaseArray) {
+  var messagesRef = new Firebase(url_fireChat);
+  var sync = $firebaseArray(messagesRef);
+  return {
+    all: function() {
+      return sync;
+    },
+    get: function(friendId) {
+      return otherfriends[friendId];
+    }
+  }
+  //return $firebaseArray(messagesRef);
+})
+
+
 .factory('myCache', function($cacheFactory) {
  return $cacheFactory('myData');
-});
+})
+
+.service('myLogin', function() {
+ 
+  return {
+      username: ''
+  }
+
+
+/*  var login = [];
+
+  var addLogin = function(newObj) {
+      login.push(newObj);
+  };
+
+  var getLogin = function(){
+      return login;
+  };
+
+  return {
+    addLogin: addLogin,
+    getLogin: getLogin
+  };
+*/
+
+})
 
 ;
