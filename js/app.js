@@ -220,48 +220,61 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', '
 
 
 
-.factory('Messages', function($firebaseArray) {
-  var messagesRef = new Firebase(url_fireChat);
-  var sync = $firebaseArray(messagesRef);
-  return {
-    all: function() {
-      return sync;
-    },
-    get: function(friendId) {
-      return otherfriends[friendId];
-    }
-  }
-  //return $firebaseArray(messagesRef);
-})
+/*.factory('Messages', function($firebase) {
+  var ref = new Firebase("https://bookingapp-f3c5d.firebaseio.com");
+  var messages = $firebase(ref.child('chat')).$asArray();
+  
+  var Message = {
+      all: messages,
+      create: function (message) {
+        return messages.$add(message);
+      },
+      get: function (messageId) {
+        return $firebase(ref.child('messages').child(messageId)).$asObject();
+      },
+      delete: function (message) {
+        return messages.$remove(message);
+      }
+    };
 
+})
+*/
 
 .factory('myCache', function($cacheFactory) {
  return $cacheFactory('myData');
 })
 
-.service('myLogin', function() {
+/*.service('myLogin', function() {
  
   return {
       username: ''
   }
 
+})*/
 
-/*  var login = [];
 
-  var addLogin = function(newObj) {
-      login.push(newObj);
-  };
+.factory('Messages', ['$firebaseArray',
+  function($firebaseArray) {
+    var ref = new Firebase(url_fireChat);
+    var messages = $firebaseArray(ref.child('messages')).$asArray();
+ 
+    var Messages = {
+      all: messages,
+      create: function (message) {
+        return messages.$add(message);
+      },
+      get: function (messageId) {
+        return $firebaseArray(ref.child('messages').child(messageId)).$asObject();
+      },
+      delete: function (message) {
+        return messages.$remove(message);
+      }
+    };
+ 
+    return Messages;
+ 
+  }
+])
 
-  var getLogin = function(){
-      return login;
-  };
-
-  return {
-    addLogin: addLogin,
-    getLogin: getLogin
-  };
-*/
-
-})
 
 ;

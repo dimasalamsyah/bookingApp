@@ -1,6 +1,8 @@
 ctrl.controller('chatCtrl', function($scope, $stateParams, $state, $ionicLoading, $http, $timeout, $ionicPopup, $ionicScrollDelegate, Messages, myLogin) {
 
-	$scope.messages = Messages.all();
+	//$scope.messages = Messages.all();
+	/*$scope.tes = Messages.all();
+	
 	var username = "";
 	
 	$scope.nama_chatId = $stateParams.ChatId;
@@ -31,8 +33,7 @@ ctrl.controller('chatCtrl', function($scope, $stateParams, $state, $ionicLoading
 	    });
 	    $ionicScrollDelegate.$getByHandle('chatScroll').scrollBottom(true);
 	    $scope.newMessage = "";
-		//console.log(myLogin.username);
-    }
+    }*/
 
 
 })
