@@ -1,12 +1,13 @@
 ctrl.controller('chatCtrl', function($scope, $stateParams, $state, $ionicLoading, 
-	$http, $timeout, $ionicPopup, $ionicScrollDelegate, Messages, myLogin, $cordovaOauth) {
+	$http, $timeout, $ionicPopup, $ionicScrollDelegate, Messages, myLogin, $cordovaOauth, $timeout) {
 
 	$scope.messages =Messages.all();
 	//console.log($scope.messages);
 	//$scope.tes = Messages.all();
 	
 	var username = "";
-	
+	var to;
+
 	$scope.nama_chatId = $stateParams.ChatId;
 
 	$scope.chat_lists = [
@@ -14,6 +15,30 @@ ctrl.controller('chatCtrl', function($scope, $stateParams, $state, $ionicLoading
 	    { nama: 'nisa', last_index: 'kosong', id: 2 }
 	];
 
+
+	$scope.funcKeydown = function() {
+	   if(to){
+
+	   	clearTimeout(to); 
+	    to = null;
+
+	   }
+
+	   console.log("aaa");
+	   Messages.createType({
+	    	"type": "typing..."
+	    });
+	   
+	   $scope.stoppedTyping();//setTimeout($scope.stoppedTyping(), 10000);
+	   
+	}
+
+	$scope.stoppedTyping = function() {
+	   to = null;
+	   Messages.removeType();
+	   
+	   setTimeout(console.log("remove aa"), 10000);
+	}
 
 	$scope.login = function(username){
 		username = username;

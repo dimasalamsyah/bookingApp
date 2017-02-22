@@ -14,6 +14,7 @@ var link_setData_Pemesanan = link + "cekData_Pemesanan.php";
 var link_delData_Pemesanan = link + "delData_Pemesanan.php";
 
 var firebaseUrl = "https://bookingapp-f3c5d.firebaseio.com/chat";
+var firebaseUrl_typing = "https://bookingapp-f3c5d.firebaseio.com/typing";
 
 //var link_setData_Pemesanan = link +"/ionic_server/setData_pemesanan.php";
 
@@ -268,6 +269,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', '
   var db = firebase.database().ref("chat").orderByKey();
   
   //var userId = firebase.auth().currentUser.uid;
+  var newPostKey_1 = firebase.database().ref("typing").child('typing').push().key;
 
   var pesan = {
     all: function(){
@@ -283,6 +285,14 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', '
     create: function(pesannya){
       var newPostKey = firebase.database().ref("chat").child('chat').push().key;
       return firebase.database().ref('chat/' + newPostKey ).set(pesannya);
+    },
+    createType:function(pesannya){
+      return firebase.database().ref( 'typing/' + newPostKey_1 ).set(pesannya);
+      //return firebase.database().ref( 'typing').remove();
+    },
+    removeType:function(pesannya){
+      //return firebase.database().ref( 'typing/' + newPostKey_1 ).set(pesannya);
+      return firebase.database().ref( 'typing').remove();
     }
   }
 
