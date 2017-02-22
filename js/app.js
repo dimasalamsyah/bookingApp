@@ -13,8 +13,7 @@ var link_setData_Pemesanan = link + "cekData_Pemesanan.php";
 
 var link_delData_Pemesanan = link + "delData_Pemesanan.php";
 
-var url_fireChat = "https://bookingapp-f3c5d.firebaseio.com/chat";
-
+var firebaseUrl = "https://bookingapp-f3c5d.firebaseio.com/chat";
 
 //var link_setData_Pemesanan = link +"/ionic_server/setData_pemesanan.php";
 
@@ -23,7 +22,7 @@ var url_fireChat = "https://bookingapp-f3c5d.firebaseio.com/chat";
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', 'onezone-datepicker', 'chart.js', 
-                            'ngCordova', 'firebase', 'angularMoment'])//, 'ionic.cloud'
+                            'ngCordova', 'firebase', 'angularMoment', 'ngCordovaOauth'])//, 'ionic.cloud'
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -82,6 +81,16 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', '
     views: {
       'menuContent': {
         templateUrl: 'templates/login.html',
+        controller: 'chatCtrl'
+      }
+    }
+  })
+
+  .state('app.logingoogle', {
+    url: '/logingoogle',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/logingoogle.html',
         controller: 'chatCtrl'
       }
     }
@@ -244,37 +253,57 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', '
  return $cacheFactory('myData');
 })
 
-/*.service('myLogin', function() {
+.service('myLogin', function() {
  
   return {
       username: ''
   }
 
-})*/
+})
 
 
-.factory('Messages', ['$firebaseArray',
-  function($firebaseArray) {
-    var ref = new Firebase(url_fireChat);
-    var messages = $firebaseArray(ref.child('messages')).$asArray();
- 
-    var Messages = {
-      all: messages,
-      create: function (message) {
-        return messages.$add(message);
-      },
-      get: function (messageId) {
-        return $firebaseArray(ref.child('messages').child(messageId)).$asObject();
-      },
-      delete: function (message) {
-        return messages.$remove(message);
-      }
-    };
- 
-    return Messages;
- 
+.factory('Messages', function($firebaseArray) {
+
+  $data = [];
+  var db = firebase.database().ref("chat").orderByKey();
+  
+  //var userId = firebase.auth().currentUser.uid;
+
+  var pesan = {
+    all: function(){
+
+      
+      db.on('child_added', function(snapshot) {
+        $data.push(snapshot.val());
+      })
+
+      return $firebaseArray(db);
+
+    },
+    create: function(pesannya){
+      var newPostKey = firebase.database().ref("chat").child('chat').push().key;
+      return firebase.database().ref('chat/' + newPostKey ).set(pesannya);
+    }
   }
-])
 
+  return pesan;
+
+})
 
 ;
+
+
+/*var ref = firebase.database().ref('/tasks/' + userUID);
+//I am doing a child based listener, but you can use .once('value')...
+ref.on('child_added', function(data) {
+   //data.key will be like -KPmraap79lz41FpWqLI
+   addNewTaskView(data.key, data.val().title);
+});
+
+ref.on('child_changed', function(data) {
+   updateTaskView(data.key, data.val().title);
+});
+
+ref.on('child_removed', function(data) {
+   removeTaskView(data.key, data.val().title);
+});*/

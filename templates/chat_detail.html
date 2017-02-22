@@ -9,17 +9,19 @@
             11: 20
           </div> -->
             <div class="user-info">
-              <a href="javascript:;" class="avatar">
+              <!-- <a href="javascript:;" class="avatar">
                 <img ng-src="" width="100%">
-              </a>
-              <p class="name">{{message.waktu | date: 'yyyy-MM-dd'}}</p>
-              <p class="name">{{ message.nama }}2</p>
+              </a> -->
+              <!-- <p class="name">{{message.waktu | date: 'yyyy-MM-dd'}}</p> -->
+             <!--  <span am-time-ago="message.waktu" style="float:left"></span> -->
+              <!-- <p class="name">{{ message.nama }}2</p> -->
             </div>
             <div class="msg-panel">
               <div class="msg-text">
                 {{ message.pesan }}
               </div>
               <div class="triangle-arrow"></div>
+              <span am-time-ago="message.waktu" style="float:left"></span>
               <div class="triangle-arrow2"></div>
             </div>
 

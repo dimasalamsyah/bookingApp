@@ -1,0 +1,14 @@
+<ion-view view-title="Login Google">
+  <ion-content>
+    	<div>
+	      <a href="" ng-click="googleLogin()"><button>Login With Google</button></a>
+	    </div>
+	    <div ng-show="showProfile" class="list">
+		  <a class="item item-avatar" href="#">
+		    <img ng-src="{{details.image.url}}">
+		    <h2>{{details.displayName}}</h2>
+		    <p>Back off, man. I'm a scientist.</p>
+		  </a>
+		</div>
+  </ion-content>
+</ion-view>

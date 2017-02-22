@@ -1,1 +1,6 @@
 https://www.sitepoint.com/using-socket-io-and-cordova-to-create-a-real-time-chat-app/
+
+https://github.com/firebase/angularfire/blob/master/docs/quickstart.md
+
+id klien anda : 811336287783-b5jsm2l2peoalibn6k2re4lmsnkiiofa.apps.googleusercontent.com
+rahasia klien anda : fvtwoCAumANEg53al-q1OaGZ
