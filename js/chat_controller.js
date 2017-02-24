@@ -1,44 +1,62 @@
 ctrl.controller('chatCtrl', function($scope, $stateParams, $state, $ionicLoading, 
-	$http, $timeout, $ionicPopup, $ionicScrollDelegate, Messages, myLogin, $cordovaOauth, $timeout) {
+	$http, $timeout, $ionicPopup, $ionicScrollDelegate, Messages, myLogin, $cordovaOauth, $timeout, limitChat) {
 
 	$scope.messages =Messages.all();
-	//console.log($scope.messages);
-	//$scope.tes = Messages.all();
+	$scope.typing =Messages.allType();
+
+	limitChat.limit = 100;
+	$scope.noMoreItemsAvailable = false;
+	
+	//console.log(Messages.all());
 	
 	var username = "";
 	var to;
-
 	$scope.nama_chatId = $stateParams.ChatId;
 
+	if(myLogin.username=="" || myLogin.username==null){
+		$state.go("loginChat");
+	}
+
+	$scope.loadMoreChat = function() {
+	    /*$scope.items.push({ id: $scope.items.length});
+	   
+	    if ( $scope.items.length == 99 ) {
+	      $scope.noMoreItemsAvailable = true;
+	    }*/
+	    $scope.$broadcast('scroll.infiniteScrollComplete');
+	    console.log("masuk");
+	};
+
+	$scope.onChatScroll = ionic.debounce(function(top) {
+	    if ($ionicScrollDelegate.getScrollPosition().bottom <= top) {
+	      $scope.loadMoreChat();
+	    }
+	}, 500);
+	
 	$scope.chat_lists = [
 	    { nama: 'dimas', last_index: 'kosong', id: 1 },
 	    { nama: 'nisa', last_index: 'kosong', id: 2 }
 	];
 
-
+	var inputChangedPromise;
 	$scope.funcKeydown = function() {
-	   if(to){
 
-	   	clearTimeout(to); 
-	    to = null;
-
-	   }
-
-	   console.log("aaa");
-	   Messages.createType({
-	    	"type": "typing..."
-	    });
-	   
-	   $scope.stoppedTyping();//setTimeout($scope.stoppedTyping(), 10000);
-	   
+		if(inputChangedPromise){
+	        $timeout.cancel(inputChangedPromise);
+	        //$scope.typing = "Sedang menulis...";
+	        Messages.createType({
+	        	"nama": $scope.nama_chatId,
+		    	"type": "Sedang menulis..."
+		    });
+	    }
+	    inputChangedPromise = $timeout(function(){
+	    	//$scope.typing = "";
+	    	Messages.removeType();
+	    	//console.log("tes"); 
+	    },1000);
 	}
 
-	$scope.stoppedTyping = function() {
-	   to = null;
-	   Messages.removeType();
-	   
-	   setTimeout(console.log("remove aa"), 10000);
-	}
+	
 
 	$scope.login = function(username){
 		username = username;
@@ -68,6 +86,16 @@ ctrl.controller('chatCtrl', function($scope, $stateParams, $state, $ionicLoading
 	    $ionicScrollDelegate.$getByHandle('chatScroll').scrollBottom(true);
 	    $scope.newMessage = "";
     }
+
+
+    var datanya = $scope.messages;
+    $scope.limitnya = 3;
+    $scope.loadMore = function() {
+      var increamented = $scope.limitnya + 3;
+      $scope.limitnya = increamented > datanya.length ? datanya.length : increamented;
+    };
+
+
 
     $scope.tesLog = function(){
     	firebase.auth().signInWithPopup(provider).then(function(result) {
@@ -108,7 +136,6 @@ ctrl.controller('chatCtrl', function($scope, $stateParams, $state, $ionicLoading
         }, function(error) {
         	$scope.details = 'got error';
         });
-        console.log("masuk");
 
     }
 
@@ -126,4 +153,12 @@ ctrl.controller('chatCtrl', function($scope, $stateParams, $state, $ionicLoading
 
 
 	
-})
+});
+
+/*ctrl.controller('chat', function($scope, $stateParams, $state, $ionicLoading, 
+	$http, $timeout, $ionicPopup, $ionicScrollDelegate, Messages, myLogin, $cordovaOauth, $timeout) {
+
+	$ionicScrollDelegate.$getByHandle('chatScroll').scrollBottom(true);
+	console.log("AA");
+
+});*/

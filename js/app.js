@@ -55,8 +55,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', '
   })
 
 /*login dan set koneksi*/
-  .state('login', {
-      url: '/login',
+  .state('loginTes', {
+      url: '/loginTes',
       templateUrl: 'templates/login.html',
       controller: 'loginCtrl'
   })
@@ -77,15 +77,21 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', '
     }
   })
   
-  .state('app.login', {
-    url: '/login',
+/*  .state('loginChat', {
+    url: '/loginChat',
     views: {
       'menuContent': {
         templateUrl: 'templates/login.html',
         controller: 'chatCtrl'
       }
     }
+  })*/
+  .state('loginChat', {
+    url: '/loginChat',
+    templateUrl: 'templates/login.html',
+    controller: 'chatCtrl'
   })
+
 
   .state('app.logingoogle', {
     url: '/logingoogle',
@@ -200,7 +206,7 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', '
 /*akhir booking*/
   ;
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/koneksi');
+  $urlRouterProvider.otherwise('/loginChat');
 })
 
 /*tgl*/
@@ -262,11 +268,25 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', '
 
 })
 
+.service('limitChat', function() {
+ 
+  return {
+      limit: 1
+  }
 
-.factory('Messages', function($firebaseArray) {
+})
+
+
+.factory('Messages', function($firebaseArray, limitChat) {
 
   $data = [];
-  var db = firebase.database().ref("chat").orderByKey();
+  $dataType = [];
+  var db = firebase.database().ref("chat")
+          .orderByKey()
+          //.limitToLast(limitChat.limit)
+          ;
+
+  var dbType = firebase.database().ref("typing").orderByKey();
   
   //var userId = firebase.auth().currentUser.uid;
   var newPostKey_1 = firebase.database().ref("typing").child('typing').push().key;
@@ -293,7 +313,19 @@ angular.module('starter', ['ionic', 'starter.controllers', 'ionic-datepicker', '
     removeType:function(pesannya){
       //return firebase.database().ref( 'typing/' + newPostKey_1 ).set(pesannya);
       return firebase.database().ref( 'typing').remove();
+    },
+    allType: function(){
+
+      
+      dbType.on('child_added', function(snapshot) {
+        $dataType.push(snapshot.val());
+      })
+
+      return $firebaseArray(dbType);
+
     }
+
+
   }
 
   return pesan;

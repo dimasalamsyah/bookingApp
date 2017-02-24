@@ -1,41 +1,51 @@
-<ion-view view-title="{{nama_chatId}}"  class="chats-view">
-
-  <ion-content has-subheader="false" delegate-handle="chatScroll">
+<ion-view view-title="{{nama_chatId}}" ng-model="tes"  class="chats-view">
+<ion-nav-title>
+    <div style="float:left">{{nama_chatId}}</div>
+    <div style="float:right; font-size: 10px;" ng-repeat="type in typing" ng-if="type.nama !== nama_chatId">{{type.type}}</div><!-- ng-if="type.type === nama_chatId" -->
+</ion-nav-title>
+  <ion-content has-subheader="false" delegate-handle="chatScroll" >
     <div class="chat-content">
+      <center><button class="button button-block button-assertive activated" ng-click="loadMore()">Load more...</button></center>
       <div class="chat-msg-items">
-        <div class="chat-item"
-          ng-repeat="message in messages track by $index"
-          ng-class="{true: 'me', false: 'you'}[nama_chatId != message.nama]">
-          <!-- <div class="time">
-            11: 20
-          </div> -->
-            <div class="user-info">
-              <!-- <a href="javascript:;" class="avatar">
-                <img ng-src="" width="100%">
-              </a> -->
-              <!-- <p class="name">{{message.waktu | date: 'yyyy-MM-dd'}}</p> -->
-             <!--  <span am-time-ago="message.waktu" style="float:left"></span> -->
-              <!-- <p class="name">{{ message.nama }}2</p> -->
-            </div>
-            <div class="msg-panel">
-              <div class="msg-text">
-                {{ message.pesan }}
-              </div>
-              <div class="triangle-arrow"></div>
-              <span am-time-ago="message.waktu" style="float:left"></span>
-              <div class="triangle-arrow2"></div>
-            </div>
+          <!-- <ion-scroll on-scroll="onChatScroll(10)"> -->
+            <div class="chat-item"
+              ng-repeat="message in messages track by $index"
+              ng-class="{true: 'me', false: 'you'}[nama_chatId != message.nama]"><!-- track by $index --><!--  | filter:waktu | limitTo : limitnya | orderBy:'-waktu' -->
 
-        </div>
+              <!-- <div class="time">
+                11: 20
+              </div> -->
+                <div class="user-info">
+                  <!-- <a href="javascript:;" class="avatar">
+                    <img ng-src="" width="100%">
+                  </a> -->
+                  <!-- <p class="name">{{message.waktu | date: 'yyyy-MM-dd'}}</p> -->
+                 <!--  <span am-time-ago="message.waktu" style="float:left"></span> -->
+                  <!-- <p class="name">{{ message.nama }}2</p> -->
+                </div>
+                <div class="msg-panel">
+                  <div class="msg-text">
+                    {{ message.pesan }}
+                  </div>
+                  <div class="triangle-arrow"></div>
+                  <span am-time-ago="message.waktu" style="float:left"></span>
+                  <div class="triangle-arrow2"></div>
+                </div>
+
+            </div>
+  
+          <!-- </ion-scroll> -->
+
       </div>
     </div>
+     
   </ion-content>
   <ion-footer-bar keyboard-attach>
 
     <form name="chatForm">
       <div class="chat-input">
         <div class="input-area">
-          <input type="text" ng-model="newMessage" ng-keydown="funcKeydown()" placeholder="Type in your message..." required>
+          <input type="text" ng-model="newMessage" ng-keypress="funcKeydown()" placeholder="Type in your message..." required>
           <button class="send-msg-btn"
             ng-disabled="!chatForm.$valid"
             ng-click="send(newMessage)"> Send
