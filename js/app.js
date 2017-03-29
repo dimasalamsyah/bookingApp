@@ -1,7 +1,9 @@
 // Ionic Starter App
 var link_dir ="/ionic/bookingApp/www/ionic_server/";
 
-var link = localStorage.getItem("token_koneksi") + link_dir;
+//var link = localStorage.getItem("token_koneksi") + link_dir;
+
+var link = "http://localhost:8080" + link_dir;
 
 var link_getData_Kelas = link + "getData_kelas.php";
 var link_getData_Jam = link + "getData_jam.php";
